@@ -24,7 +24,9 @@ export class ProfileComponent implements OnInit {
   }
   repos: any[];
   term:string='codeavak';
-  logChange=(text)=>{   this.ghService.getProfile(text).subscribe(response => {
+  logChange=(text)=>{   
+    this.term=text;
+    this.ghService.getProfile(text).subscribe(response => {
     console.log(response);
     this.user = {
       name: response.name,
@@ -39,7 +41,7 @@ export class ProfileComponent implements OnInit {
       followers: response.followers,
       following: response.following
     };
-    this.ghService.getRepos(this.term).subscribe(response => { console.log(response); this.repos = response; });
+    this.ghService.getRepos(text).subscribe(response => { console.log(response); this.repos = response; });
   })}
 
   constructor(private ghService: GithubService) { }
