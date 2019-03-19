@@ -1,0 +1,89 @@
+<div class="card mt-3">
+  <app-search (termChanged)="logChange($event)"></app-search>
+  <div class="card-header">
+    {{ user.login }}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ user.name }}</h5>
+    <div class="card-text">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="row">
+            <img
+              style="width:200px;height:200px;"
+              class="img-thumbnail"
+              [src]="user.avatar_url"
+            />
+          </div>
+          <div class="row">
+            <a
+              target="blank"
+              href="http://github.com/{{ user.login }}"
+              style="border:1px black solid"
+              class="mt-3 ml-4 btn btn-light"
+              >View Profile</a
+            >
+          </div>
+        </div>
+        <div class="col-md-10">
+          <div class="card">
+            <div class="col-md-12 mb-3 mt-3">
+                <div class="badge badge-info">{{ user.public_repos }} Public Repos</div>
+                <div class="badge badge-success  ml-2">{{ user.followers }} Followers</div>
+                <div class="badge badge-info  ml-2">{{ user.followers }} Followers</div>
+                  <div class="badge badge-warning  ml-2">{{ user.following }} Following</div>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <span class="mr-3"><b>Username:</b></span
+                >{{ user.login }}
+              </li>
+              <li class="list-group-item">
+                <span class="mr-3"><b>Location:</b></span
+                >{{ user.location }}
+              </li>
+              <li class="list-group-item">
+                <span class="mr-3"><b>Email:</b></span
+                >{{ user.email }}<span *ngIf="!user.email">N/A</span>
+              </li>
+              <li class="list-group-item">
+                <span class="mr-3"><b>Blog:</b></span
+                >{{ user.blog }}
+              </li>
+              <li class="list-group-item">
+                <span class="mr-3"><b>Member Since:</b></span
+                >{{ user.membersince | date }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="card mt-3">
+    <div class="card-header">
+      {{ user.login }}'s Repos
+    </div>
+    <div class="card-body">
+      <div class="list-group">
+        <div *ngFor="let repo of repos | paginate: { itemsPerPage: 5, currentPage: p }" class="list-group-item">
+          <div class="row">
+            <div class="col-md-9">
+                <div class="row"><a target="blank" href={{repo.svn_url}}><b>{{repo.name}}</b></a></div>
+                <div class="row"><small>{{repo.description}}</small></div>
+            </div>
+            <div class="col-md-3"><div class="badge badge-info mr-3">{{repo.watchers}} Watchers</div>
+              <button class="badge badge-success">{{repo.forks}} Forks</button></div>
+          </div>
+          
+          
+        
+        </div>
+      </div>
+    </div>
+  </div>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
